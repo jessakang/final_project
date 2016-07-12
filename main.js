@@ -63,7 +63,7 @@ svg.append("g")
     .attr("transform", "translate(0," + h + ")")
     .call(xAxis)
     .append("text")
-    .attr("x", 490)
+    .attr("x", 458)
     .attr("y", 30)
     .attr("dx", ".71em")
     .style("text-anchor", "middle")
@@ -92,7 +92,7 @@ svg.append("g")
 d3.csv("GENDER_EMP_11072016050959084.csv", function(error, data) {
     // debugger;
     data = _.groupBy(data, "Country");
-    data = data["Australia"];
+    data = data["Canada"];
     // debugger
     data.forEach(function(data) {
         // debugger
