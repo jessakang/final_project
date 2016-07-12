@@ -1,25 +1,43 @@
 var margin = {top: 70, right: 20, bottom: 30, left: 50},
-w = 400 - margin.left - margin.right,
-h = 400 - margin.top - margin.bottom;
+w = 1000 - margin.left - margin.right,
+h = 500 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%y").parse;
+var formatPercentage = d3.format("%");
 
-var x = d3.time.scale().range([0, w]);
-var y = d3.scale.linear().range([h, 0]);
+var x = d3.scale.linear()
+    .domain([2000,2014])
+    .range([0,w]);
+
+var y = d3.scale.linear()
+    .domain([0,50])
+    .range([h, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .ticks(5);
+    .tickFormat(d3.format("data"))
+    .ticks(15);
+
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
+    .tickFormat(function (d) {
+      return d + "%";
+    })
     .ticks(5);
+
+var tip = d3.tip()
+    .attr("class", "d3-tip")
+    .offset([-10, 0])
+    .html(function (data) {
+      return "<strong>Percentage:</strong> <span style='color:red'>" + data.Value + "</span>";
+    })
 
 var xGrid = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .ticks(5)
+    .ticks(15)
     .tickSize(-h, 0, 0)
     .tickFormat("");
 
@@ -40,10 +58,23 @@ var svg = d3.select("body").append("svg")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + h + ")")
     .call(xAxis)
+  .append("text")
+      .attr("x", 490)
+      .attr("y", 30)
+      .attr("dx", ".71em")
+      .style("text-anchor", "middle")
+      .text("Year");
 
   svg.append("g")
     .attr("class", "y axis")
     .call(yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", 0 - (h / 2))
+    .attr("y", 0 - margin.left)
+    .attr("dy", ".71em")
+    .style("text-anchor", "middle")
+    .text("Percentage");
 
   svg.append("g")
     .attr("class", "grid")
@@ -55,41 +86,40 @@ var svg = d3.select("body").append("svg")
     .call(yGrid);
 
 d3.csv("GENDER_EMP_11072016050959084.csv", function (error, data) {
+  // debugger;
+  data = _.groupBy(data, "Country");
+  data = data["New Zealand"];
   // debugger
   data.forEach(function (data) {
     // debugger
     data.time = parseDate(data.TIME);
     data.value = +data.Value;
   });
+
+  data.sort(function (a, b) {
+    return a.TIME - b.TIME;
+  });
+
   // debugger;
   x.domain(d3.extent(data, function (data) {
+    // console.log(data.TIME);
     return data.TIME;
   }));
-  y.domain(d3.extent(data, function (data) {
-    return data.Value;
-  }));
+  // y.domain(d3.extent(data, function (data) {
+  //   // console.log(data.Value);
+  //   return data.Value;
+  // }));
 
   var line = d3.svg.line()
-    .x(function (data) { return x(data.TIME); })
-    .y(function (data) { return y(data.Value); });
+    .x(function (data) {
+      // console.log( data );
+      return x(data.TIME);
+     })
+    .y(function (data) {
+      return y(data.Value);
+     });
 
-
-  var labels = svg.append("g")
-    .attr("class", "labels")
-
-  labels.append("text")
-    .attr("transform", "translate(0," + h + ")")
-    .attr("x", (w-margin.right))
-    .attr("dx", "-1.0em")
-    .attr("dy", "2.0em")
-    .text("[Years]");
-
-  labels.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", -40)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Percentage");
+  // console.log(line);
 
   var title = svg.append("g")
     .attr("class", "title");
@@ -99,11 +129,33 @@ d3.csv("GENDER_EMP_11072016050959084.csv", function (error, data) {
     .attr("y", -30)
     .attr("text-anchor", "middle")
     .style("font-size", "22px")
-    .text("A D3 line chart from CSV file");
+    .text("Gender Pay Gap");
 
   svg.append("path")
     .datum(data)
     .attr("class", "line")
-    .attr("data", line);
+    .attr("d", line);
 
+  svg.selectAll(".circle")
+    .data(data)
+    .enter()
+    .append("svg:circle")
+    .attr("class", "circle")
+    .attr("cx", function (data) {
+      // console.log( x(D))
+      // console.log( x );
+      return x(data.TIME);
+    })
+    // .attr("width", x.rangeBand())
+    .attr("cy", function (data) {
+      // console.log( y(data.Value) );
+      return y(data.Value);
+    })
+    // .attr("height", function (data) {
+    //   return h - y(data.Value);
+    // })
+    .attr("r", 5)
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide)
+    .call(tip)
 });
