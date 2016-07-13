@@ -147,4 +147,5 @@ d3.csv("GENDER_EMP_11072016050959084.csv", function(error, data) {
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
         .call(tip)
+        
 });
