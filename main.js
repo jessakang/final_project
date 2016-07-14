@@ -1,9 +1,5 @@
-// Turn all of main.js into a function that receives a country name
-  // Firstly, remove everything in .popup
-  // Then render the chart
-
-
 var showCountryData = function (country) {
+  // debugger;
 
   var margin = {
           top: 70,
@@ -59,7 +55,7 @@ var showCountryData = function (country) {
       .tickSize(-w, 0, 0)
       .tickFormat("");
 
-  var svg = d3.select(".popup").append("svg")
+  var svg = d3.select("#popup").append("svg")
       .attr("width", w + margin.left + margin.right)
       .attr("height", h + margin.top + margin.bottom)
       .append("g")
@@ -153,12 +149,16 @@ var showCountryData = function (country) {
 
   });
 
-  // window.onload = function(){
-  //
-  //     };
-      $('body').click(function() {
-      if (!$(this.target).is('.popup')){
-         $(".popup").fadeOut(300);
-      }
-  });
+  $('path').on("click", function(){
+      country = this.getAttribute("aria-label");
+      // debugger
+      console.log( country );
+    });
   };
+
+  $('body').click(function() {
+  if (!$(this.target).is('#popup')){
+     $("#popup").fadeOut(300);
+     $("#popup").addClass('hide');
+  }
+});
