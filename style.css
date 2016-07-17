@@ -1,0 +1,144 @@
+body {
+    font-size: 12px;
+    font-family: "Times New Roman", Times, serif;
+    align-items: center;
+}
+
+h1 {
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: lighter;
+  text-align: right;
+  padding-right: 10px;
+}
+#popup {
+    padding-left: 15px;
+    padding-bottom: 30px;
+    position: fixed;
+    width: 72vw;
+    height: 70vh;
+    top: 5vh;
+    left: 15vw;
+    background: white;
+    border-style: solid;
+    align-items: center;
+}
+#popup svg {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.0 {
+  stroke: steelblue;
+}
+.country0 {
+  font-size: 35px;
+  fill: steelblue;
+}
+.1 {
+  stroke: green;
+}
+.country1 {
+  font-size: 35px;
+  fill: green;
+}
+.hide {
+    display: none;
+}
+.axis path, .axis line {
+    fill: none;
+    stroke: #333;
+}
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.6;
+}
+.grid path {
+    stroke-width: 0;
+}
+.countryLine0 {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+.countryLine1 {
+    fill: none;
+    stroke: green;
+    stroke-width: 1.5px;
+}
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+#close {
+    font-size: 25px;
+    float: right;
+    display: inline-block;
+    padding: 2px 7px;
+    background: #ccc;
+    cursor: pointer;
+}
+#close:hover {
+    float: right;
+    display: inline-block;
+    padding: 2px 7px;
+    background: #ccc;
+    color: #fff;
+}
+path {
+    z-index: 9999;
+}
+.switch {
+    margin-left: 1300px;
+}
+.cmn-toggle {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+.cmn-toggle+ label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+input.cmn-toggle-round-flat+ label {
+    padding: 2px;
+    width: 120px;
+    height: 60px;
+    background-color: #dddddd;
+    border-radius: 60px;
+    transition: background 0.4s;
+}
+input.cmn-toggle-round-flat+ label:before, input.cmn-toggle-round-flat+ label:after {
+    display: block;
+    position: absolute;
+    content: "";
+}
+input.cmn-toggle-round-flat+ label:before {
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    right: 2px;
+    background-color: #fff;
+    border-radius: 60px;
+    transition: background 0.4s;
+}
+input.cmn-toggle-round-flat+ label:after {
+    top: 4px;
+    left: 4px;
+    bottom: 4px;
+    width: 52px;
+    background-color: #dddddd;
+    border-radius: 52px;
+    transition: margin 0.4s, background 0.4s;
+}
+input.cmn-toggle-round-flat:checked+ label {
+    background-color: #8ce196;
+}
+input.cmn-toggle-round-flat:checked+ label:after {
+    margin-left: 60px;
+    background-color: #8ce196;
+}
