@@ -52,7 +52,7 @@ var showCountryData = function(country, countryNumber) {
         .attr("class", "country" + countryNumber)
         .offset([-10, 0])
         .html(function(data) {
-            return "<span style='color:steelblue'>" + data.Value + "%" + "</span>";
+            return "<span style='color:red'>" + data.Value + "%" + "</span>";
         })
 
     // Creating a grid system that will distribute plot points evenly on the chart.
@@ -149,8 +149,8 @@ var showCountryData = function(country, countryNumber) {
             .attr("x", (w / 2))
             .attr("y", -30)
             .attr("text-anchor", "middle")
-            .style("font-size", "16px")
-            .text("*The gender pay gap is defined as the difference between male and female median wages divided by the male median wages.");
+            .style("font-size", "35px")
+            .text( country );
 
         // Appending a line path joining all points on the line
         svg.append("path")
@@ -209,7 +209,7 @@ map.addListener("clickMapObject", function(event) {
         if (countryArray.length < 2) {
             return false;
         } else {
-            console.log(countryArray);
+            // console.log(countryArray);
             showCountryData(countryArray[0], 0);
             // window.setTimeout(function () {
             showCountryData(countryArray[1], 1);
